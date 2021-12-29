@@ -1,0 +1,87 @@
+import { useState } from 'react';
+import Image1 from '../assets/Imgs/img1.jpg';
+import Image2 from '../assets/Imgs/img2.jpg';
+import Image3 from '../assets/Imgs/img3.jpg';
+import Image4 from '../assets/Imgs/img4.jpg';
+import Image5 from '../assets/Imgs/img5.jpg';
+
+const images = [Image1, Image2, Image3, Image4, Image5];
+
+export default function Slider() {
+  const [index, setIndex] = useState(0);
+
+  const handleArrow = (direction) => {
+    if (direction === 'l') {
+      setIndex(index !== 0 ? index - 1 : 4);
+    }
+
+    if (direction === 'r') {
+      setIndex(index !== 4 ? index + 1 : 0);
+    }
+  };
+
+  return (
+    <div className="h-screen text-white relative overflow-hidden">
+      <div className="sm:hidden flex space-x-3 left-[7.5rem] top-[17rem] absolute z-50">
+        {images.map((img, i) => (
+          <div
+            className="bg-gray-300 rounded-full h-3 w-3"
+            onClick={() => setIndex(i)}
+          />
+        ))}
+      </div>
+      <div className="flex justify-between items-center bottom-44">
+        <div
+          className="absolute z-10 top-32 sm:top-1/2  left-2 cursor-pointer"
+          onClick={() => handleArrow('l')}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </div>
+        <div
+          className="absolute z-10 top-32 sm:top-1/2 right-2 cursor-pointer"
+          onClick={() => handleArrow('r')}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <div
+        // className={`wrapper w-[500vw] h-full flex transform translate-x-[${-300}vw]`}
+        className={`wrapper w-[500vw] h-full flex transition-all ease-in-out duration-[1500ms]`}
+        style={{ transform: `translateX(${-100 * index}vw)` }}
+      >
+        {images.map((img, i) => (
+          <div key={i} className="imgContainer w-[100vw] h-full relative">
+            <img src={img} alt="pix" className="object-contain" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
